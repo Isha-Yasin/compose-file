@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: gripo/gripo-nginx:1.0
+          ports:
+            - containerPort: 5055
+          env:
+            - name: LISTEN_PORT
+              value: "5055"
+            - name: API_BACKEND
+              value: "http://gripo-application:5080"
+            - name: TERMINAL_BACKEND
+              value: "http://gripo-terminal:8377"
+            - name: FRONTEND_BACKEND
+              value: "http://gripo-frontend:3000"
